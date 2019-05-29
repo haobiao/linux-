@@ -1,5 +1,7 @@
-1、设置root密码： 
+**1、设置root密码：** 
 
+
+```c
 sudo passwd
 
 //输入要设置的root账号密码
@@ -9,33 +11,46 @@ sudo passwd
 su root
 
 //输入刚才设置好的密码。
+```
 
 
 
-2、查看当前 Windows 10内置的Ubuntu系统版本，可以打开命令提示符输入 bash 进入shell后使用如下命令查询：
+**2、查看当前 Windows 10内置的Ubuntu系统版本**
+可以打开命令提示符输入 bash 进入shell后使用如下命令查询：
 
+```c
 lsb_release -a
+```
 
 
 
-3、更换依赖源
+**3、更换依赖源**
 
 https://opsx.alibaba.com/mirror   阿里源
 
-找到所对应发行版 -> 点击帮助 -> 在选择对应的版本
+找到所对应发行版 -> 点击帮助 -> 选择对应的版本
 
-赋值源
+赋值需要源的代码
 
-粘贴到    ：  etc/apt/sources.list
+粘贴到目录    ：  /etc/apt/sources.list
 
-4、apt-get update
+**4、更新源**
 
-5、apt-get upgrade——更新所有已安装的软件包 
+```c
+apt-get update
+```
 
-6、安装GCC、G++开发环境
+**5、更新所有已安装的软件包** 
+
+```c
+apt-get upgrade
+```
+
+**6、安装GCC、G++开发环境**
 
 Ubuntu缺省情况下，并没有提供C/C++的编译环境，因此还需要手动安装。但是如果单独安装gcc以及g++比较麻烦，幸运的是，Ubuntu提供了一个build-essential软件包。查看该软件包的依赖关系：
 
+```c
 y@ubuntu:~$ apt-cache depends build-essential
 build-essential
  |Depends: libc6-dev
@@ -46,25 +61,38 @@ build-essential
   Depends: make
     make-guile
   Depends: dpkg-dev
+```
 
 也就是说，安装了该软件包，编译c/c++所需要的软件包也都会被安装。因此如果想在Ubuntu中编译c/c++程序,只需要安装该软件包就可以了。
 
-安装方法如下：$sudo apt-get install build-essential
+安装方法如下：
+
+```c
+sudo apt-get install build-essential
+```
 
 查看版本： 
 
+```c
 gcc --version 
 
- g++ --version
+g++ --version
+```
 
-7、安装GDB调试器
+**7、安装GDB调试器**
 
+```c
 apt-get install gdb
+```
 
 查看版本：gdb -v
 
-8、替换 vimrc
+**8、修改vim配置，替换 vimrc**
 
+Ubuntu位置：/etc/vim/vimrc
+
+vim常用配置
+```c
 map <F9> :call SaveInputData()<CR>
 func! SaveInputData()
 	exec "tabnew"
@@ -72,18 +100,12 @@ func! SaveInputData()
 	exec "w! /tmp/input_data"
 endfunc
 
-
-
-
 "colorscheme torte
 "colorscheme murphy
 colorscheme desert 
 "colorscheme desert 
 "colorscheme elflord
 "colorscheme ron
-
-
-
 
 "set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 "set termencoding=utf-8
@@ -109,7 +131,7 @@ set showcmd         " 输入的命令显示出来，看的清楚些
 "set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
 "set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 set novisualbell    " 不要闪烁(不明白)  
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ POS=%l,%v\ %{strftime("%d/%m/%y\ -\ %H:%M")}   "状态行显示的内容  
 set laststatus=1    " 启动显示状态行(1),总是显示状态行(2)  
 "set foldenable      " 允许折叠  
 "set foldmethod=manual   " 手动折叠  
@@ -130,26 +152,26 @@ endif
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-""autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()" 
+""autocmd BufNewFile .cpp,.[ch],.sh,.java exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 ""func SetTitle() 
 	"如果文件类型为.sh文件 
 ""	if &filetype == 'sh' 
-""		call setline(1,"\#########################################################################") 
-""		call append(line("."), "\# File Name: ".expand("%")) 
-""		call append(line(".")+1, "\# Author: Bill") 
-""		call append(line(".")+2, "\# mail: 812834017@qq.com") 
-""		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-""		call append(line(".")+4, "\#########################################################################") 
-""		call append(line(".")+5, "\#!/bin/bash") 
+""		call setline(1,"#########################################################################") 
+""		call append(line("."), "# File Name: ".expand("%")) 
+""		call append(line(".")+1, "# Author: XXXXXXXXXXX ") 
+""		call append(line(".")+2, "# mail: XXXXXXXXXXX ") 
+""		call append(line(".")+3, "# Created Time: ".strftime("%c")) 
+""		call append(line(".")+4, "#########################################################################") 
+""		call append(line(".")+5, "#!/bin/bash") 
 ""		call append(line(".")+6, "") 
 ""	else 
-""		call setline(1, "/*************************************************************************") 
+""		call setline(1, "/*************************") 
 ""		call append(line("."), "	> File Name: ".expand("%")) 
-""		call append(line(".")+1, "	> Author: Bill") 
-""		call append(line(".")+2, "	> Mail: 812834017@qq.com ") 
+""		call append(line(".")+1, "	> Author: XXXXXXXXXXX ") 
+""		call append(line(".")+2, "	> Mail: XXXXXXXXXXX ") 
 ""		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
-""		call append(line(".")+4, " ************************************************************************/") 
+""		call append(line(".")+4, " ************************/") 
 ""		call append(line(".")+5, "")
 ""	endif
 ""	if &filetype == 'cpp'
@@ -245,7 +267,7 @@ set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
-"set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\
+"set statusline=\ %<%F[%1%M%%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\
 " 设置在状态行显示的信息
 "set foldcolumn=0
 "set foldmethod=indent 
@@ -292,8 +314,8 @@ set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set langmenu=zh_CN.UTF-8
 set helplang=cn
 " 我的状态行显示的内容（包括文件类型和解码）
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-"set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ POS=%l,%v\ %{strftime("%d/%m/%y\ -\ %H:%M")}
+"set statusline=[%F]%y%r%m%*%=Line:%l/%L,Column:%c
 " 总是显示状态行
 set laststatus=2
 " 命令行（在状态行下）的高度，默认为1，这里是2
@@ -348,7 +370,7 @@ au BufRead,BufNewFile *  setfiletype txt
 :inoremap ' ''<ESC>i
 function! ClosePair(char)
 	if getline('.')[col('.') - 1] == a:char
-		return "\<Right>"
+		return "<Right>"
 	else
 		return a:char
 	endif
@@ -356,11 +378,7 @@ endfunction
 filetype plugin indent on 
 "打开文件类型检测, 加了这句才可以用智能补全
 set completeopt=longest,menu
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "NERDtee设定
 let NERDChristmasTree=1
@@ -376,6 +394,4 @@ let NERDTreeWinSize=31
 nnoremap f :NERDTreeToggle
 map <F7> :NERDTree<CR>  
 set nocompatible
-
-
-
+```
